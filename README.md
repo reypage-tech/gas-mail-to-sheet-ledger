@@ -61,7 +61,6 @@
 
 ## 作った人
 Reypage｜GAS業務自動化
-https://reypage.pages.dev/automation/
 
 ## ライセンス
 MIT（LICENSE を参照）
