@@ -1,5 +1,17 @@
 # gas-mail-to-sheet-ledger
 
+## In English
+
+A Google Apps Script sample that copies booking notification emails into a spreadsheet ledger. All data is fictional (a cooking school).
+Every 10 minutes it searches Gmail for booking and cancellation emails, reads date, slot, party size and booking number, and adds a row to the ledger.
+Read email IDs are recorded, so the same email is never added twice. Cancellations mark the row as cancelled, and a slot view shows the next 7 days.
+Emails it cannot read are kept out of the ledger and written to an error log sheet. The code sends no email.
+How to try it:
+1. Create a new spreadsheet and open Apps Script from Extensions.
+2. Paste each `.gs` file in `src/` and replace `appsscript.json`. Adjust `Config.gs`.
+3. Run `resetDemo` once to create the sheets, then `setupTriggers` to start (`stopTriggers` to stop).
+4. Local tests with mocked Google services: `node test/run.js`. Not yet run in a real Apps Script project.
+
 通知メールをスプレッドシートの台帳に自動で書き込む Google Apps Script の見本です。
 架空の料理教室のデータで動きます。登場する教室・人物・メールはすべて架空です。
 
