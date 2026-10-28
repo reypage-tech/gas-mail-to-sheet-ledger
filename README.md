@@ -21,7 +21,7 @@ R-1007は、数式の形の名前を全角にして、数式として動かな�
 2. 本文から日時・枠・人数・予約番号を読み取り、「予約台帳」に1行追加
 3. 読んだメールのIDを「取込済み」に記録し、同じメールは二度入れない
 4. キャンセルは台帳の状態を「キャンセル」にして行を灰色にする
-5. 「枠別一覧」に今日から7日分の人数・残り・状況を出す
+5. 「枠別一覧」に今日と、その先7日（計8日分）の人数・残り・状況を出す
 6. 読めないメールは止めて、内容を「エラー通知ログ」に残す（送信はしない）
 
 ## 効果
@@ -77,7 +77,7 @@ Reypage｜GAS業務自動化
 
 A Google Apps Script sample that copies booking notification emails into a spreadsheet ledger. All data is fictional (a cooking school).
 Every 10 minutes it searches Gmail for booking and cancellation emails, reads date, slot, party size and booking number, and adds a row to the ledger.
-Read email IDs are recorded, so the same email is never added twice. Cancellations mark the row as cancelled, and a slot view shows the next 7 days.
+Read email IDs are recorded, so the same email is never added twice. Cancellations mark the row as cancelled, and a slot view shows today plus the next 7 days (8 days in total).
 Emails it cannot read are kept out of the ledger and written to an error log sheet. The code sends no email.
 How to try it:
 1. Create a new spreadsheet and open Apps Script from Extensions.
