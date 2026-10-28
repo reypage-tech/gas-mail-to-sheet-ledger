@@ -1,18 +1,13 @@
-# gas-mail-to-sheet-ledger
+# 予約メールを台帳に写す手作業をなくす（GAS見本）
 
-## In English
+料理教室などで、予約サイトから届く通知メールを毎朝スプレッドシートに写している担当の方向けです。
 
-A Google Apps Script sample that copies booking notification emails into a spreadsheet ledger. All data is fictional (a cooking school).
-Every 10 minutes it searches Gmail for booking and cancellation emails, reads date, slot, party size and booking number, and adds a row to the ledger.
-Read email IDs are recorded, so the same email is never added twice. Cancellations mark the row as cancelled, and a slot view shows the next 7 days.
-Emails it cannot read are kept out of the ledger and written to an error log sheet. The code sends no email.
-How to try it:
-1. Create a new spreadsheet and open Apps Script from Extensions.
-2. Paste each `.gs` file in `src/` and replace `appsscript.json`. Adjust `Config.gs`.
-3. Run `resetDemo` once to create the sheets, then `setupTriggers` to start (`stopTriggers` to stop).
-4. Local tests with mocked Google services: `node test/run.js`. Not yet run in a real Apps Script project.
+![予約台帳・枠別一覧・エラー通知ログ（模擬テストの出力、架空データ）](docs/local_test_output.png)
 
-通知メールをスプレッドシートの台帳に自動で書き込む Google Apps Script の見本です。
+架空の通知メール10通を読み、台帳に6件を追加し、キャンセル1件を反映し、読めない2通をエラー通知ログに残した結果です。上の画像は、ローカルの模擬テスト（`node test/demo_output.js`、Google のサービスはモック）の実際の出力から作りました。実際の Google アカウントでは動かしていません。
+
+**効果：** 届いたメールを1通ずつ台帳に写す作業が、10分ごとの自動の書き込みになります。同じメールは二度入らず、キャンセルも台帳に反映されます。
+
 架空の料理教室のデータで動きます。登場する教室・人物・メールはすべて架空です。
 
 ## 課題
@@ -34,12 +29,13 @@ How to try it:
 | 二重入力・キャンセル漏れ | 起きやすい | 同じメールは二度入らない |
 | 枠の残り | 数え直し | 枠別一覧ですぐ分かる |
 
-ローカルの模擬テスト（`node test/run.js`、GoogleのサービスはモックAPI）で55件すべて通ることを確かめています。
+ローカルの模擬テスト（`node test/run.js`、Google のサービスはモック）で55件すべて通ることを確かめています。
 
 ## 画面
-![作る前](docs/jp1_before.webp)
-![作った後](docs/jp1_after.webp)
-![台帳の画面](docs/jp1_ch11.webp)
+説明用に作った図です（実際の Google の画面ではありません）。
+![作る前（説明用の図）](docs/jp1_before.webp)
+![作った後（説明用の図）](docs/jp1_after.webp)
+![台帳（説明用の図）](docs/jp1_ch11.webp)
 
 ## 設置の手順
 1. 新しいスプレッドシートを作り、「拡張機能」から Apps Script を開く
@@ -60,7 +56,7 @@ How to try it:
 | src/Code.gs | 取り込み・トリガーの作成と停止・デモの初期化 |
 | src/Dedupe.gs | 処理済みIDの記録 |
 | src/Summary.gs・Notify.gs・Common.gs | 集計・通知文・共通の処理 |
-| test/ | Node.js で動くテスト |
+| test/ | Node.js で動くテスト（demo_output.js は冒頭の画像の元になる出力） |
 
 ## 作りの工夫
 - テスト：`node test/run.js`（Google のサービスを偽物に置き換えて Node.js で動かします。実際の Apps Script では動かしていません）
@@ -74,6 +70,18 @@ How to try it:
 
 ## 作った人
 Reypage｜GAS業務自動化
+
+## In English
+
+A Google Apps Script sample that copies booking notification emails into a spreadsheet ledger. All data is fictional (a cooking school).
+Every 10 minutes it searches Gmail for booking and cancellation emails, reads date, slot, party size and booking number, and adds a row to the ledger.
+Read email IDs are recorded, so the same email is never added twice. Cancellations mark the row as cancelled, and a slot view shows the next 7 days.
+Emails it cannot read are kept out of the ledger and written to an error log sheet. The code sends no email.
+How to try it:
+1. Create a new spreadsheet and open Apps Script from Extensions.
+2. Paste each `.gs` file in `src/` and replace `appsscript.json`. Adjust `Config.gs`.
+3. Run `resetDemo` once to create the sheets, then `setupTriggers` to start (`stopTriggers` to stop).
+4. Local tests with mocked Google services: `node test/run.js`. The image at the top is built from `node test/demo_output.js` on the same mocks. Not yet run in a real Apps Script project.
 
 ## ライセンス
 MIT（LICENSE を参照）
